@@ -4,11 +4,13 @@ select
     a.sex,
     a.born,
     e.sport,
+    t.year,
     e.event,
     e.medal,
     count(*) over (partition by e.medal) as medal_count
 from olympic_athlete_bio a
 join olympic_athlete_event_results e on a.athlete_id = e.athlete_id
+join olympic_games_medal_tally t on t.edition_id = e.edition_id
 where e.medal is not null;
 
 create view if not exists country_medal_tally as
