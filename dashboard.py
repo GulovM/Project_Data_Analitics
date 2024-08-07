@@ -4,6 +4,7 @@ from dash.dependencies import Output, Input
 import plotly.express as px
 import pandas as pd
 from etl import extract_data, transform_data
+import os
 
 # Извлечение и трансформация данных
 athlete_medals, country_medal_tally, yearly_medal_count, top_athletes = extract_data()
@@ -15,6 +16,7 @@ max_date_ymc = yearly_medal_count['year'].max()
 years_ymc = yearly_medal_count.sort_values(by='year')['year'].unique().tolist()
 
 app = dash.Dash(__name__)
+server = app.server
 
 # Layout приложения
 app.layout = html.Div([
@@ -242,5 +244,5 @@ def update_top_athletes(selected_sport):
     return fig, filtered_df.to_dict('records')
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
-
+    port = int(os.environ.get('PORT', 8050))
+    app.run_server(debug=True, host='0.0.0.0', port=port)
