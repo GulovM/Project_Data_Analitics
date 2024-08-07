@@ -16,7 +16,7 @@ max_date_ymc = yearly_medal_count['year'].max()
 years_ymc = yearly_medal_count.sort_values(by='year')['year'].unique().tolist()
 
 app = dash.Dash(__name__)
-
+server = app.server
 # Layout приложения
 app.layout = html.Div([
     html.H1("Olympic Dashboard"),
