@@ -4,7 +4,7 @@ from dash.dependencies import Output, Input
 import plotly.express as px
 import pandas as pd
 from etl import extract_data, transform_data
-from waitress import serve
+import os
 
 # Извлечение и трансформация данных
 athlete_medals, country_medal_tally, yearly_medal_count, top_athletes = extract_data()
@@ -242,3 +242,7 @@ def update_top_athletes(selected_sport):
     )
 
     return fig, filtered_df.to_dict('records')
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 8050))
+    app.run_server(debug=True, host='0.0.0.0', port=port)
